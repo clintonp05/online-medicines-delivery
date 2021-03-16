@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
+  <a class="navbar-brand" href="/#">
+    <img src="../../images/ej-phable-logo.svg" alt="Grails Logo" />
+  </a>
+  <button class="navbar-toggler" type="button" (click)="navExpanded = !navExpanded" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="!navExpanded">
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item dropdown" ngbDropdown>
+        <div ngbDropdownToggle class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Hello, Clinton
+        </div>
+        <div class="dropdown-menu" aria-labelledby="statusDropdown" ngbDropdownMenu>
+          <a class="dropdown-item"  routerLink="/orders" href="#">Orders</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link "  routerLink="/mycart" id="statusDropdown dropdown-toggle">
+            <span class="material-icons" style="font-size: 21px;">
+              shopping_cart
+              </span>
+            <span style="padding:5px;">Cart</span>
+            <span style="padding:5px;">{{cartSize}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

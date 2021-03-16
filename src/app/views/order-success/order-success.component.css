@@ -1,0 +1,10 @@
+.phabcart-btn {
+    background: #feb672;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.container-fluid{
+    min-height: 400px;
+    padding: 15% ;
+}

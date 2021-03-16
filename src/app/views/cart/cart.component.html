@@ -1,0 +1,97 @@
+<div class="med-container-base container">
+    <div class="container-fluid">
+        <div class=" row" *ngIf="cart.cartItemList.length > 0">
+            <div class="col-md-5">
+                <div *ngFor="let med of cart.cartItemList" class="med-container"
+                    style="padding: 5px;border: 1px solid #EAEAEA;margin : 10px 2px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="img-container col-md-6">
+                                <img src="{{med.itemImageURL}}" style=" display: block;
+                            max-width:190px;
+                            max-height:90px;
+                            width: auto;
+                            height: auto;
+                            margin : auto">
+                            </div>
+                            <div class="desc-container col-md-6">
+                                <div class="name-container">{{med.itemName+" "+med.itemCategory}}</div>
+                                <div class="stock-container">&#8377;{{med.itemPrice}}</div>
+                                <div class="stock-container">Quantity : {{med.itemUserStockQuantity}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="cart-summary-container">
+                    <div>CART SUMMARY ( {{cart.cartItemList.length}} )</div>
+                    <table>
+                        <tr>
+                            <td>Total MRP</td>
+                            <td>&#8377;{{totalSum}}</td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td>&#8377;{{(totalSum*0.18).toFixed(2)}}</td>
+                        </tr>
+                        <tr style="border-top : 2px solid #EAEAEA;border-bottom : 2px solid #EAEAEA;">
+                            <td style="font-weight: 500;">Total Amount</td>
+                            <td style="font-weight: 500;">&#8377;{{getSubTotal(totalSum).toFixed(2)}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="cart-btn-container">
+                    <button class="btn phabcart-btn form-control " type="button" (click)="checkoutCart()">
+                        Proceed to Checkout
+                    </button>
+                </div>
+
+                <div class="user-info-container" *ngIf="checkoutView">
+                    <div style="margin : 20px 0px;border-bottom : 2px solid #EAEAEA;"></div>
+                    <div style="padding: 10px 0px">DELIVERY INFORMATION</div>
+                    <div class="form-group">
+                        <label for="name">Full name</label>
+                        <input type="text" [(ngModel)]="userInfo.name" class="form-control" id="name"
+                            placeholder="Enter full name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Email address</label>
+                        <input type="email" [(ngModel)]="userInfo.email" class="form-control" id="email"
+                            placeholder="Enter email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address 1</label>
+                        <input type="text" [(ngModel)]="userInfo.address" class="form-control" id="address"
+                            placeholder="Enter address" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" [(ngModel)]="userInfo.city" class="form-control" id="city"
+                            placeholder="Enter City" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" [(ngModel)]="userInfo.state" class="form-control" id="state"
+                            placeholder="Enter State" />
+                    </div>
+
+                    <button class="btn btn-primary place-order-btn form-control" type="submit"
+                        (click)="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cart.cartItemList.length == 0" class="container-fluid text-center" style="margin : 10px;">
+            <div>
+                <h5>Your cart is empty</h5>
+            </div>
+            <button class="btn phabcart-btn " type="button" (click)="gotoHome()">
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+</div>

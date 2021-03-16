@@ -1,0 +1,69 @@
+<div class="nav navbar-nav ml-auto">
+    <div class="header-container row">
+        <div class="col">
+            <h4>Medicines</h4>
+        </div>
+        <div class="col search-container">
+            <input type="search" class="form-control" placeholder="search by name or category"
+                [(ngModel)]="searchQuery">
+        </div>
+        <div class="col sort-container">
+            <select name="selectedQuantity" class="med-sort-select" (change)="setSelectedMedSort($event.target.value)">
+                <option value="">Relevance</option>
+                <option value="price+">Price: Low to High</option>
+                <option value="price-">Price: High to Low</option>
+                <option value="rating">Rating</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="med-container-base container">
+    <div class="container-fluid">
+        <div class=" row" *ngIf="( medicineList |  medSearch:searchQuery) as result">
+            <div *ngFor="let med of result | medSort:selectedMedSort:ascending" class="med-container col-md-3" [ngClass]="{'grey-out': med.units  <= 0}"
+                style="padding: 5px;" (mouseover)="med.showCartView = true" (mouseout)="med.showCartView = (med.userStockOrder > 0 ? true : false)">
+                <div class="med-single-container">
+                    <div class="img-container">
+                        <img src="{{med.imageURL}}" style=" display: block;
+                        max-width:230px;
+                        max-height:130px;
+                        width: auto;
+                        height: auto;
+                        margin : auto">
+                    </div>
+                    <div class="desc-container">
+                        <div class="name-container">{{med.name+" "+med.category}}</div>
+                        <div class="stock-container" *ngIf="med.units > 0">{{med.units+" left"}}</div>
+                        <div class="stock-container" *ngIf="med.units < 1">Out of stock</div>
+                        <div class="price-rating-container row">
+                            <div class="price-container col">&#8377;{{med.price}}</div>
+                            <div class="rating-container col">
+                                <div>&#9733;{{med.rating}}</div>
+                            </div>
+                        </div>
+                        <div class="cart-container container" [hidden]="!med.showCartView && med.userStockOrder == 0">
+                            <div class="row" [hidden]="!(med.userStockOrder == 0 && med.units != 0) ">
+                                <button class="btn phabcart-btn form-control " type="button" (click)="changeView(med)">
+                                    <i class="fa fa-plus">ADD TO CART </i>
+                                </button>
+                            </div>
+                            <div class="row bordered-btn" [hidden]="med.userStockOrder == 0 && med.userStockOrder == 0">
+                                <button class="btn col cart-btn" type="button" (click)="removeFromCart(med,1)">
+                                    <i class="fa fa-plus">-</i>
+                                </button>
+                            <div class="col userstockorder-container">{{med.userStockOrder}}</div>
+                                <button class="btn col cart-btn" type="button" (click)="addToCart(med,1)">
+                                    <i class="fa fa-plus">+</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div *ngIf="result.length == 0" class="container-fluid">
+                <div class="text-center">No medicines found</div>
+            </div>
+        </div>
+    </div>
+</div>
